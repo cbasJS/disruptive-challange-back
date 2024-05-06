@@ -3,14 +3,9 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const tematicSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-  },
   name: {
     type: String,
     required: true,
-    index: true,
     unique: true,
   },
   thumbnailImage: {

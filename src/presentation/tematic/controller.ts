@@ -34,9 +34,6 @@ export class TematicController {
     } = req.body;
 
     if (name && thumbnailImage && createdInfo) {
-      const tematicRepository = new TematicRepositoryImpl(
-        new MongoTematicDataSource()
-      );
       try {
         const newTematic = await TematicModel.create({
           name,

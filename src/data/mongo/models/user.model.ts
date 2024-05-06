@@ -3,10 +3,6 @@ import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 
 const userSchema = new mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-  },
   mail: {
     type: String,
     required: true,
