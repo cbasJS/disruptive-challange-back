@@ -54,15 +54,15 @@ export class UserController {
           userName,
           typeOfUser,
         });
-        await newUser.save();
 
         return res.json({ status: "ok", message: "", data: newUser });
       } catch (e: any) {
-        if (e.errorResponse.code === 11000) {
+        if (e._message && e._message === "User validation failed") {
           return res
             .status(400)
             .json({ error: "El usuario o correo ya existe!" });
         }
+
         console.log(e);
         return res.status(500).json(e);
       }
