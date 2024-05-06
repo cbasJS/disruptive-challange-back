@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repository.impl";
 import { MongoUserDatasource } from "../../infrastructure/datasources/mongo-user.datasource";
 import { UserModel } from "../../data/mongo";
-import { ok } from "assert";
 
 export class UserController {
   //* DI
