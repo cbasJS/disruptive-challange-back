@@ -28,6 +28,23 @@ export class UserEntity {
     this._id = _id;
   }
 
+  //"{ "level": "high", "message":"Hola Mundo", "createdAt":"128937TZ12378123" }"
+  static fromJson = (json: string): UserEntity => {
+    json = json === "" ? "{}" : json;
+
+    const { typeOfUser, mail, userName, createdAt, _id } = JSON.parse(json);
+
+    const user = new UserEntity({
+      _id,
+      typeOfUser,
+      mail,
+      userName,
+      createdAt,
+    });
+
+    return user;
+  };
+
   static fromObject = (object: { [key: string]: any }): UserEntity => {
     const { typeOfUser, mail, userName, createdAt, _id } = object;
     const user = new UserEntity({
