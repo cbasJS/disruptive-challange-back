@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserRepositoryImpl } from "../../infrastructure/repositories/user.repository.impl";
 import { MongoUserDatasource } from "../../infrastructure/datasources/mongo-user.datasource";
 import { UserModel } from "../../data/mongo";
+import { ok } from "assert";
 
 export class UserController {
   //* DI
@@ -15,12 +16,20 @@ export class UserController {
       const userRepository = new UserRepositoryImpl(new MongoUserDatasource());
       const user = await userRepository.getUser(userName, mail);
       if (user.length) {
-        res.json(user[0]);
+        return res.json({
+          status: "ok",
+          message: "",
+          data: user[0],
+        });
       } else {
-        res.status(404).json({ error: "No se encontró ningun usuario" });
+        return res.json({
+          status: "ok",
+          message: "No se encontró ningun usuario",
+          data: null,
+        });
       }
     } else {
-      res
+      return res
         .status(404)
         .json({ error: "Usuario y correcto electronico son requeridos" });
     }
@@ -47,13 +56,15 @@ export class UserController {
         });
         await newUser.save();
 
-        res.json(newUser);
+        return res.json({ status: "ok", message: "", data: newUser });
       } catch (e: any) {
-        // if (e.errorResponse.code === 11000) {
-        //   res.status(400).json({ error: "El usuario o correo ya existe!" });
-        // }
+        if (e.errorResponse.code === 11000) {
+          return res
+            .status(400)
+            .json({ error: "El usuario o correo ya existe!" });
+        }
         console.log(e);
-        res.status(500).json(e);
+        return res.status(500).json(e);
       }
     }
   };
